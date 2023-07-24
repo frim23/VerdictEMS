@@ -54,14 +54,22 @@ RegisterCommand('revive', function(_, args)
 	if character then
 		local targetId = args[1]
 		local job = character.job
-		if job == "LSFD" then
-			TriggerServerEvent('VerdictEMS:revive', targetId)
-		else
+		if targetId == nil then
 			TriggerEvent('chat:addMessage', {
-			  color = { 44, 87, 242},
+			  color = { 196, 35, 46},
 			  multiline = true,
-			  args = {"VerdictEMS", "You are not a medical personnel"}
+			  args = {"Error", "You need to enter a valid Player ID"}
 		  })
+		else
+			if job == "LSFD" then
+				TriggerServerEvent('VerdictEMS:revive', targetId)
+			else
+				TriggerEvent('chat:addMessage', {
+				  color = { 44, 87, 242},
+				  multiline = true,
+				  args = {"VerdictEMS", "You are not a medical personnel"}
+			  })
+			end
 		end
 	else
 		print("No character selected")
@@ -71,14 +79,22 @@ RegisterCommand('heal', function(_, args)
 	if character then
 		local targetId = args[1]
 		local job = character.job
-		if job == "LSFD" then
-			TriggerServerEvent('VerdictEMS:heal', targetId)
-		else
+		if targetId == nil then
 			TriggerEvent('chat:addMessage', {
-			  color = { 44, 87, 242},
+			  color = { 196, 35, 46},
 			  multiline = true,
-			  args = {"VerdictEMS", "You are not a medical personnel"}
+			  args = {"Error", "You need to enter a valid Player ID"}
 		  })
+		else
+			if job == "LSFD" then
+				TriggerServerEvent('VerdictEMS:heal', targetId)
+			else
+				TriggerEvent('chat:addMessage', {
+				  color = { 44, 87, 242},
+				  multiline = true,
+				  args = {"VerdictEMS", "You are not a medical personnel"}
+			  })
+			end
 		end
 	else
 		print("No character selected")
