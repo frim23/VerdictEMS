@@ -1,3 +1,5 @@
+local department = "LSFD"
+
 NDCore = exports["ND_Core"]:GetCoreObject()
 local character = NDCore.Functions.GetSelectedCharacter()
 
@@ -61,7 +63,7 @@ RegisterCommand('revive', function(_, args)
 			  args = {"Error", "You need to enter a valid Player ID"}
 		  })
 		else
-			if job == "LSFD" then
+			if job == department then
 				TriggerServerEvent('VerdictEMS:revive', targetId)
 			else
 				TriggerEvent('chat:addMessage', {
@@ -86,7 +88,7 @@ RegisterCommand('heal', function(_, args)
 			  args = {"Error", "You need to enter a valid Player ID"}
 		  })
 		else
-			if job == "LSFD" then
+			if job == department then
 				TriggerServerEvent('VerdictEMS:heal', targetId)
 			else
 				TriggerEvent('chat:addMessage', {
