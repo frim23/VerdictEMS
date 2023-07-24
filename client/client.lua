@@ -5,12 +5,34 @@ RegisterNetEvent("VerdictEMS:healme")
 RegisterNetEvent('VerdictEMS:healsuccess')
 RegisterNetEvent("VerdictEMS:reviveme")
 RegisterNetEvent('VerdictEMS:revivesuccess')
+RegisterNetEvent('VerdictEMS:offline')
 
+AddEventHandler("VerdictEMS:offline",function()
+		SetEntityHealth(PlayerPedId(), 200)
+	  TriggerEvent('chat:addMessage', {
+		  color = { 196, 35, 46},
+		  multiline = true,
+		  args = {"Error", "Player with this ID doesn't exist"}
+	  })
+end)
 AddEventHandler("VerdictEMS:healme",function()
-    SetEntityHealth(PlayerPedId(), 200)
+		SetEntityHealth(PlayerPedId(), 200)
+	  TriggerEvent('chat:addMessage', {
+		  color = { 44, 87, 242},
+		  multiline = true,
+		  args = {"VerdictEMS", "You got cured by an EMT"}
+	  })
 end)
 AddEventHandler("VerdictEMS:reviveme",function()
-    SetEntityHealth(PlayerPedId(), 110)
+		if GetEntityHealth(PlayerPedId()) < 110 then
+    	SetEntityHealth(PlayerPedId(), 110)
+    	TriggerEvent('chat:addMessage', {
+			  color = { 44, 87, 242},
+			  multiline = true,
+			  args = {"VerdictEMS", "You got revived by an EMT"}
+		  })
+    else
+    end
 end)
 
 AddEventHandler('VerdictEMS:revivesuccess', function()
@@ -32,7 +54,7 @@ RegisterCommand('revive', function(_, args)
 	if character then
 		local targetId = args[1]
 		local job = character.job
-		if job == "LSPD" then
+		if job == "LSFD" then
 			TriggerServerEvent('VerdictEMS:revive', targetId)
 		else
 			TriggerEvent('chat:addMessage', {
@@ -49,7 +71,7 @@ RegisterCommand('heal', function(_, args)
 	if character then
 		local targetId = args[1]
 		local job = character.job
-		if job == "LSPD" then
+		if job == "LSFD" then
 			TriggerServerEvent('VerdictEMS:heal', targetId)
 		else
 			TriggerEvent('chat:addMessage', {
@@ -62,3 +84,10 @@ RegisterCommand('heal', function(_, args)
 		print("No character selected")
 	end
 end)
+
+TriggerEvent('chat:addSuggestion', '/revive', 'Revive an injured player (Available to SAFR/EMT only)', {
+    { name="Player ID", help="Player's server ID" }
+})
+TriggerEvent('chat:addSuggestion', '/heal', 'Cure a patient (Available to SAFR/EMT only)', {
+    { name="Player ID", help="Player's server ID" }
+})
