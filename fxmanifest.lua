@@ -11,5 +11,6 @@ server_script {
  }
 
 exports {
-	'ND_Core'
+	'ND_Core',
+	'fax-revive'
 }

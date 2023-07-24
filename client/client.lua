@@ -1,4 +1,5 @@
 local department = "LSFD"
+local fax_revive = true
 
 NDCore = exports["ND_Core"]:GetCoreObject()
 local character = NDCore.Functions.GetSelectedCharacter()
@@ -27,7 +28,13 @@ AddEventHandler("VerdictEMS:healme",function()
 end)
 AddEventHandler("VerdictEMS:reviveme",function()
 		if GetEntityHealth(PlayerPedId()) < 110 then
-    	SetEntityHealth(PlayerPedId(), 110)
+			if fax_revive then
+    		exports["fax-revive"]:revivePed(PlayerPedId())
+    		print("fax revive")
+    	else
+    		SetEntityHealth(PlayerPedId(), 110)
+    		print("no fax revive")
+    	end
     	TriggerEvent('chat:addMessage', {
 			  color = { 44, 87, 242},
 			  multiline = true,
